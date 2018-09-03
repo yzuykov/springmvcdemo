@@ -18,4 +18,11 @@ class UiController
         model.addAttribute("Name", "Yuriy")
         return "welcome"
     }
+
+    @GetMapping("/news")
+    fun news(model: Model): String
+    {
+        model.addAttribute("NewsList", newsService.getNewsList())
+        return "news"
+    }
 }
