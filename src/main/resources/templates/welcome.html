@@ -1,0 +1,13 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Spring Boot Thymeleaf + Spring Security</title>
+    <div th:replace="fragments/header :: header-css"></div>
+</head>
+<body>
+<div th:replace="fragments/header :: navigate"></div>
+<div class="container-fluid">
+    <h1><p th:text="'Name: ' +  ${Name}"></p></h1>
+</div>
+</body>
+</html>
