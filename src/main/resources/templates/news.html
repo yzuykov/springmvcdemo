@@ -8,7 +8,7 @@
 <div th:replace="fragments/header :: navigate"></div>
 <div class="container-fluid">
     <h1><p th:text="'News: '"></p></h1>
-    <table class="table">
+    <table id="newsTable" class="table">
         <thead>
         <tr>
             <th scope="col">Date</th>
@@ -17,13 +17,20 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="article : ${NewsList}">
-            <td th:text="${{article.publishedAt}}">13/01/2011</td>
+        <tr th:onclick="|trclick('${article}')|" th:each="article : ${NewsList}">
+            <td th:text="${#dates.format({article.publishedAt}, 'dd-MM-yyyy HH:mm')}">13/01/2011</td>
             <td th:text="${{article.title}}">13/01/2011</td>
             <td th:text="${{article.author}}">13/01/2011</td>
         </tr>
         </tbody>
     </table>
 </div>
+<div th:replace="fragments/header :: assets">
+</div>
+<script>
+    function trclick(article){
+        console.log(article)
+    }
+</script>
 </body>
 </html>
