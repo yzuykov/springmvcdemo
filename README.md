@@ -1,2 +1,2 @@
 # springmvcdemo
-Example Spring Boot application with MVC, Kotlin, Gradle, Thymleaf, Bootstrap 4
+Example Spring Boot application with MVC, Kotlin, Gradle, Thymeleaf, Bootstrap 4
