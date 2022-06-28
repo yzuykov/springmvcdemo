@@ -17,15 +17,13 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:onclick="|trclick('${article}')|" th:each="article : ${NewsList}">
+        <tr th:each="article : ${NewsList}">
             <td th:text="${#dates.format({article.publishedAt}, 'dd-MM-yyyy HH:mm')}">13/01/2011</td>
             <td th:text="${{article.title}}">13/01/2011</td>
             <td th:text="${{article.author}}">13/01/2011</td>
         </tr>
         </tbody>
     </table>
-</div>
-<div th:replace="fragments/header :: assets">
 </div>
 <script>
     function trclick(article){
