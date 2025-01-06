@@ -14,6 +14,7 @@
             <th scope="col">Date</th>
             <th scope="col">Title</th>
             <th scope="col">Author</th>
+            <th scope="col">Description</th>
         </tr>
         </thead>
         <tbody>
@@ -21,6 +22,7 @@
             <td th:text="${#dates.format({article.publishedAt}, 'dd-MM-yyyy HH:mm')}">13/01/2011</td>
             <td th:text="${{article.title}}">13/01/2011</td>
             <td th:text="${{article.author}}">13/01/2011</td>
+            <td th:text="${{article.description}}">13/01/2011</td>
         </tr>
         </tbody>
     </table>
