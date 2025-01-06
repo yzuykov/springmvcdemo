@@ -1,2 +1,4 @@
 news:
-  url: "https://newsapi.org/v2/top-headlines?sources=google-news-ru&apiKey=d0f1fd5097b641d88df662c46241248b"
+  url: "https://newsapi.org/v2"
+  apiKey: "d0f1fd5097b641d88df662c46241248b"
+  sources: "google-news-ru"

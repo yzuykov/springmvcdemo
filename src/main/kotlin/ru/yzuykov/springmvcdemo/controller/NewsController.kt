@@ -17,7 +17,7 @@ class NewsController @Autowired constructor(val newsService: NewsService) {
 
     @GetMapping("/news")
     fun news(model: Model): String {
-        model.addAttribute("NewsList", newsService.getNewsList())
+        model.addAttribute("NewsList", newsService.getArticlesList())
         return "news"
     }
 }
