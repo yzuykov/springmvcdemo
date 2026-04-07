@@ -1,44 +1,54 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
-	val kotlinVersion = "2.1.10"
-	val springBootVersion = "3.5.5"
-	id("org.springframework.boot") version springBootVersion
+	id("org.springframework.boot") version "3.5.5"
 	id("io.spring.dependency-management") version "1.1.7"
-	kotlin("jvm") version kotlinVersion
-	kotlin("plugin.spring") version kotlinVersion
-
+	kotlin("jvm") version "2.1.10"
+	kotlin("plugin.spring") version "2.1.10"
+	jacoco
 }
 
 group = "ru.yzuykov"
 version = "1.0.0-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_21
 
 kotlin {
-    jvmToolchain(21)
+	jvmToolchain(21)
 }
-
-tasks.withType<Test> {
-	useJUnitPlatform()
-}
-
 
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-//	compile('org.springframework.boot:spring-boot-starter-security')
-	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+	// Spring Boot starters
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.3.0")
+	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+	implementation("org.springframework.boot:spring-boot-devtools")
+
+	// Spring Cloud
+	implementation(platform("org.springframework.cloud:spring-cloud-dependencies:2025.0.0"))
+	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+
+	// Kotlin
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+	// Webjars
 	implementation("org.webjars:webjars-locator:0.45")
 	implementation("org.webjars.npm:bootstrap:5.1.3")
-	implementation("org.springframework.boot:spring-boot-devtools")
+
+	// Test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
 	testImplementation("io.mockk:mockk:1.13.13")
+}
+
+tasks.withType<Test> {
+	useJUnitPlatform()
+}
+
+tasks.named<JacocoReport>("jacocoTestReport") {
+	dependsOn(tasks.test)
+	reports {
+		xml.required.set(true)
+		html.required.set(true)
+	}
 }
