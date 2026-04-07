@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-	val kotlinVersion = "2.1.0"
-	val springBootVersion = "2.7.18"
+	val kotlinVersion = "2.1.10"
+	val springBootVersion = "3.5.5"
 	id("org.springframework.boot") version springBootVersion
 	id("io.spring.dependency-management") version "1.1.7"
 	kotlin("jvm") version kotlinVersion
@@ -12,13 +12,10 @@ plugins {
 
 group = "ru.yzuykov"
 version = "1.0.0-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_11
+java.sourceCompatibility = JavaVersion.VERSION_21
 
-tasks.withType<KotlinCompile> {
-	kotlinOptions {
-		freeCompilerArgs = listOf("-Xjsr305=strict")
-		jvmTarget = "11"
-	}
+kotlin {
+    jvmToolchain(21)
 }
 
 tasks.withType<Test> {
@@ -34,7 +31,7 @@ dependencies {
 //	compile('org.springframework.boot:spring-boot-starter-security')
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("org.springframework.cloud:spring-cloud-starter-openfeign:3.1.9")
+	implementation("org.springframework.cloud:spring-cloud-starter-openfeign:4.3.0")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
