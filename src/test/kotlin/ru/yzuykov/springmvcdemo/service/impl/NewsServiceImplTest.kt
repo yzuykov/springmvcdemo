@@ -10,7 +10,7 @@ import ru.yzuykov.springmvcdemo.config.NewsProperties
 import ru.yzuykov.springmvcdemo.model.ArticleDto
 import ru.yzuykov.springmvcdemo.model.NewsResponse
 import ru.yzuykov.springmvcdemo.model.SourceDto
-import java.util.Date
+import java.time.Instant
 
 class NewsServiceImplTest {
 
@@ -31,7 +31,7 @@ class NewsServiceImplTest {
                 description = "Test Description",
                 url = "https://test.com/article",
                 urlToImage = "https://test.com/image.jpg",
-                publishedAt = Date()
+                publishedAt = Instant.now()
             )
         )
         val newsResponse = NewsResponse(

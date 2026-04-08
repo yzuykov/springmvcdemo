@@ -10,7 +10,7 @@ import org.springframework.ui.Model
 import ru.yzuykov.springmvcdemo.model.ArticleDto
 import ru.yzuykov.springmvcdemo.model.SourceDto
 import ru.yzuykov.springmvcdemo.service.api.NewsService
-import java.util.Date
+import java.time.Instant
 
 class NewsControllerTest {
 
@@ -32,7 +32,7 @@ class NewsControllerTest {
 
         // then
         assertEquals("welcome", result)
-        io.mockk.verify { model.addAttribute("Name", "Yuriy") }
+        io.mockk.verify { model.addAttribute("name", "Yuriy") }
     }
 
     @Test
@@ -46,7 +46,7 @@ class NewsControllerTest {
                 description = "Description 1",
                 url = "https://test.com/article1",
                 urlToImage = "https://test.com/image1.jpg",
-                publishedAt = Date()
+                publishedAt = Instant.now()
             ),
             ArticleDto(
                 source = SourceDto("source-2", "Test Source 2"),
@@ -55,7 +55,7 @@ class NewsControllerTest {
                 description = "Description 2",
                 url = "https://test.com/article2",
                 urlToImage = "https://test.com/image2.jpg",
-                publishedAt = Date()
+                publishedAt = Instant.now()
             )
         )
         val model: Model = mockk(relaxed = true)
@@ -67,7 +67,7 @@ class NewsControllerTest {
 
         // then
         assertEquals("news", result)
-        io.mockk.verify { model.addAttribute("NewsList", articles) }
+        io.mockk.verify { model.addAttribute("newsList", articles) }
     }
 
     @Test
@@ -81,6 +81,6 @@ class NewsControllerTest {
 
         // then
         assertEquals("news", result)
-        io.mockk.verify { model.addAttribute("NewsList", emptyList<ArticleDto>()) }
+        io.mockk.verify { model.addAttribute("newsList", emptyList<ArticleDto>()) }
     }
 }
