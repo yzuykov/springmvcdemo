@@ -1,4 +1,4 @@
 news:
   url: "https://newsapi.org/v2"
-  apiKey: "d0f1fd5097b641d88df662c46241248b"
+  apiKey: ${NEWS_API_KEY:}
   sources: "google-news-ru"

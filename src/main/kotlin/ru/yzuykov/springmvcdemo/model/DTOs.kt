@@ -1,6 +1,6 @@
 package ru.yzuykov.springmvcdemo.model
 
-import java.util.*
+import java.time.Instant
 
 data class NewsResponse (val status: String,
                          val totalResults: Int,
@@ -12,7 +12,7 @@ data class ArticleDto (val source: SourceDto,
                        val description: String?,
                        val url: String,
                        val urlToImage: String?,
-                       val publishedAt: Date?)
+                       val publishedAt: Instant?)
 
 data class SourceDto(val id: String,
                      val name: String)

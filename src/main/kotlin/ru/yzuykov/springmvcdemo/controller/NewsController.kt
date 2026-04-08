@@ -11,13 +11,13 @@ class NewsController @Autowired constructor(val newsService: NewsService) {
 
     @GetMapping("/")
     fun welcome(model: Model): String {
-        model.addAttribute("Name", "Yuriy")
+        model.addAttribute("name", "Yuriy")
         return "welcome"
     }
 
     @GetMapping("/news")
     fun news(model: Model): String {
-        model.addAttribute("NewsList", newsService.getArticlesList())
+        model.addAttribute("newsList", newsService.getArticlesList())
         return "news"
     }
 }
