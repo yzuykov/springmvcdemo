@@ -32,13 +32,13 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 
 	// Webjars
-	implementation("org.webjars:webjars-locator:0.45")
-	implementation("org.webjars.npm:bootstrap:5.1.3")
+	implementation("org.webjars:webjars-locator:0.52")
+	implementation("org.webjars.npm:bootstrap:5.3.3")
 
 	// Test
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.security:spring-security-test")
-	testImplementation("io.mockk:mockk:1.13.13")
+	testImplementation("io.mockk:mockk:1.14.4")
 }
 
 tasks.withType<Test> {
