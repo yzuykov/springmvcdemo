@@ -15,14 +15,16 @@ import java.time.Instant
 class NewsServiceImplTest {
 
     private val newsClient: NewsClient = mockk()
-    private val newsProperties: NewsProperties = mockk()
+    private val newsProperties = NewsProperties(
+        apiKey = "test-api-key",
+        sources = "test-sources",
+        url = "https://test.com"
+    )
     private val newsService = NewsServiceImpl(newsClient, newsProperties)
 
     @Test
     fun `getArticlesList returns articles when client returns data`() {
         // given
-        val apiKey = "test-api-key"
-        val sources = "test-sources"
         val articles = listOf(
             ArticleDto(
                 source = SourceDto("source-1", "Test Source"),
@@ -40,9 +42,7 @@ class NewsServiceImplTest {
             articles = articles
         )
 
-        every { newsProperties.apiKey } returns apiKey
-        every { newsProperties.sources } returns sources
-        every { newsClient.getTopHeadLines(apiKey, sources) } returns newsResponse
+        every { newsClient.getTopHeadLines(newsProperties.apiKey, newsProperties.sources) } returns newsResponse
 
         // when
         val result = newsService.getArticlesList()
@@ -54,14 +54,9 @@ class NewsServiceImplTest {
     }
 
     @Test
-    fun `getArticlesList returns empty list when client returns null`() {
+    fun `getArticlesList returns empty list when client throws exception`() {
         // given
-        val apiKey = "test-api-key"
-        val sources = "test-sources"
-
-        every { newsProperties.apiKey } returns apiKey
-        every { newsProperties.sources } returns sources
-        every { newsClient.getTopHeadLines(apiKey, sources) } returns null
+        every { newsClient.getTopHeadLines(newsProperties.apiKey, newsProperties.sources) } throws RuntimeException("API error")
 
         // when
         val result = newsService.getArticlesList()
@@ -73,17 +68,13 @@ class NewsServiceImplTest {
     @Test
     fun `getArticlesList returns empty list when articles list is empty`() {
         // given
-        val apiKey = "test-api-key"
-        val sources = "test-sources"
         val newsResponse = NewsResponse(
             status = "ok",
             totalResults = 0,
             articles = emptyList()
         )
 
-        every { newsProperties.apiKey } returns apiKey
-        every { newsProperties.sources } returns sources
-        every { newsClient.getTopHeadLines(apiKey, sources) } returns newsResponse
+        every { newsClient.getTopHeadLines(newsProperties.apiKey, newsProperties.sources) } returns newsResponse
 
         // when
         val result = newsService.getArticlesList()
@@ -95,17 +86,18 @@ class NewsServiceImplTest {
     @Test
     fun `getArticlesList passes correct API key and sources to client`() {
         // given
-        val apiKey = "my-api-key"
-        val sources = "bbc-news,cnn"
+        val newsResponse = NewsResponse(
+            status = "ok",
+            totalResults = 0,
+            articles = emptyList()
+        )
 
-        every { newsProperties.apiKey } returns apiKey
-        every { newsProperties.sources } returns sources
-        every { newsClient.getTopHeadLines(apiKey, sources) } returns null
+        every { newsClient.getTopHeadLines(newsProperties.apiKey, newsProperties.sources) } returns newsResponse
 
         // when
         newsService.getArticlesList()
 
         // then - verify the correct parameters were passed
-        io.mockk.verify { newsClient.getTopHeadLines(apiKey, sources) }
+        io.mockk.verify { newsClient.getTopHeadLines(newsProperties.apiKey, newsProperties.sources) }
     }
 }
