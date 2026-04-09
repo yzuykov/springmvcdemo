@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping
 import ru.yzuykov.springmvcdemo.service.api.NewsService
 
 @Controller
-class NewsController @Autowired constructor(val newsService: NewsService) {
+class NewsController(private val newsService: NewsService) {
 
     @GetMapping("/")
     fun welcome(model: Model): String {
