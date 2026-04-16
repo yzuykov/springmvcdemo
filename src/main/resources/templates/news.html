@@ -1,34 +1,46 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Spring Boot Thymeleaf + Spring Security</title>
-    <div th:replace="fragments/header :: header-css"></div>
+    <title>News - Springmvcdemo</title>
+    <div th:replace="~{fragments/header :: header-css}"></div>
 </head>
 <body>
-<div th:replace="fragments/header :: navigate"></div>
-<div class="container-fluid">
-    <h1>News:</h1>
-    <table id="newsTable" class="table">
-        <thead>
-        <tr>
-            <th scope="col">Date</th>
-            <th scope="col">Title</th>
-            <th scope="col">Author</th>
-            <th scope="col">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:if="${#lists.isEmpty(newsList)}">
-            <td colspan="4" class="text-center">No news available</td>
-        </tr>
-        <tr th:each="article : ${newsList}">
-            <td th:text="${article.publishedAt != null ? #temporals.format(article.publishedAt, 'dd-MM-yyyy HH:mm') : 'N/A'}">N/A</td>
-            <td th:text="${article.title}">Title</td>
-            <td th:text="${article.author ?: 'Unknown'}">Author</td>
-            <td th:text="${article.description ?: 'No description'}">Description</td>
-        </tr>
-        </tbody>
-    </table>
+<div th:replace="~{fragments/header :: navigate}"></div>
+<div class="container">
+    <h1 class="mb-4">News:</h1>
+
+    <!-- Empty state -->
+    <div th:if="${#lists.isEmpty(newsList)}" class="text-center py-5">
+        <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi bi-newspaper text-muted mb-3" viewBox="0 0 16 16">
+            <path d="M0 2.5A1.5 1.5 0 0 1 1.5 1h11A1.5 1.5 0 0 1 14 2.5v10.528c0 .3-.05.654-.238.972h.738a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 1 1 0v9a1.5 1.5 0 0 1-1.5 1.5H1.497A1.497 1.497 0 0 1 0 13.5v-11zM12 14c.37 0 .654-.05.972-.238A.5.5 0 0 0 13 13.5v-11A.5.5 0 0 0 12.5 2h-11A.5.5 0 0 0 1 2.5v11c0 .37.05.654.238.972A.5.5 0 0 0 1.5 14h11z"/>
+            <path d="M2.5 3h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1zm0 2h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1zm0 2h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1 0-1zm4.5-1a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H7.5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H7.5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H7.5a.5.5 0 0 1-.5-.5z"/>
+        </svg>
+        <h3 class="text-muted">No news available</h3>
+        <p class="text-secondary">Try again later or check your API configuration</p>
+    </div>
+
+    <!-- News cards -->
+    <div class="row" th:unless="${#lists.isEmpty(newsList)}">
+        <div th:each="article : ${newsList}" class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+                <img th:if="${article.urlToImage != null}"
+                     th:src="${article.urlToImage}" class="card-img-top" alt="News image"
+                     style="height: 200px; object-fit: cover;">
+                <div class="card-body d-flex flex-column">
+                    <p class="text-muted small mb-1"
+                       th:text="${article.publishedAt != null ? #temporals.format(article.publishedAt, 'dd-MM-yyyy HH:mm') : 'N/A'}"></p>
+                    <h5 class="card-title">
+                        <a th:href="${article.url}" target="_blank" rel="noopener noreferrer"
+                           th:text="${article.title}" class="text-decoration-none text-dark"></a>
+                    </h5>
+                    <p class="card-text flex-grow-1" th:text="${article.description ?: 'No description'}"></p>
+                    <p class="card-text text-muted small mb-0"
+                       th:text="'By ' + ${article.author ?: 'Unknown'}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 </body>
 </html>

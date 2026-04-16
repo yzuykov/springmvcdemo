@@ -17,7 +17,12 @@ class NewsServiceImpl(
 
     override fun getArticlesList(): List<ArticleDto> {
         return try {
-            newsClient.getTopHeadLines(newsProperties.apiKey, newsProperties.sources).articles
+            val sourcesResponse = newsClient.getSources(newsProperties.apiKey, "ru")
+            val sources = sourcesResponse.sources.joinToString(",") { it.id }
+            log.info("Fetched {} sources: {}", sourcesResponse.sources.size, sources)
+            val response = newsClient.getTopHeadLines(newsProperties.apiKey, sources)
+            log.info("Got {} articles", response.articles.size)
+            response.articles
         } catch (e: Exception) {
             log.error("Failed to fetch news from NewsAPI", e)
             emptyList()
