@@ -43,6 +43,7 @@ class NewsControllerTest {
                 author = "Author 1",
                 title = "Article 1",
                 description = "Description 1",
+                content = "Full content of article 1",
                 url = "https://test.com/article1",
                 urlToImage = "https://test.com/image1.jpg",
                 publishedAt = Instant.now()
@@ -52,6 +53,7 @@ class NewsControllerTest {
                 author = "Author 2",
                 title = "Article 2",
                 description = "Description 2",
+                content = "Full content of article 2",
                 url = "https://test.com/article2",
                 urlToImage = "https://test.com/image2.jpg",
                 publishedAt = Instant.now()
@@ -81,5 +83,43 @@ class NewsControllerTest {
         // then
         assertEquals("news", result)
         io.mockk.verify { model.addAttribute("newsList", emptyList<ArticleDto>()) }
+    }
+
+    @Test
+    fun `news returns news view when service throws exception`() {
+        // given
+        val model: Model = mockk(relaxed = true)
+        every { newsService.getArticlesList() } throws RuntimeException("API error")
+
+        // when / then
+        org.junit.jupiter.api.assertThrows<RuntimeException> {
+            controller.news(model)
+        }
+    }
+
+    @Test
+    fun `news handles articles with null content`() {
+        // given
+        val articles = listOf(
+            ArticleDto(
+                source = SourceDto("source-1", "Test Source"),
+                author = null,
+                title = "Article without content",
+                description = "Description only",
+                content = null,
+                url = "https://test.com/article1",
+                urlToImage = null,
+                publishedAt = null
+            )
+        )
+        val model: Model = mockk(relaxed = true)
+        every { newsService.getArticlesList() } returns articles
+
+        // when
+        val result = controller.news(model)
+
+        // then
+        assertEquals("news", result)
+        io.mockk.verify { model.addAttribute("newsList", articles) }
     }
 }
