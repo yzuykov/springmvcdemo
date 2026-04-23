@@ -1,5 +1,5 @@
 plugins {
-	id("org.springframework.boot") version "3.5.5"
+	id("org.springframework.boot") version "4.0.1"
 	id("io.spring.dependency-management") version "1.1.7"
 	kotlin("jvm") version "2.1.10"
 	kotlin("plugin.spring") version "2.1.10"
@@ -19,14 +19,11 @@ repositories {
 
 dependencies {
 	// Spring Boot starters
-	implementation("org.springframework.boot:spring-boot-starter-web")
+	implementation("org.springframework.boot:spring-boot-starter-webmvc")
 	implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
+	implementation("org.springframework.boot:spring-boot-starter-restclient")
 	implementation("org.springframework.boot:spring-boot-devtools")
-
-	// Spring Cloud
-	implementation(platform("org.springframework.cloud:spring-cloud-dependencies:2025.0.0"))
-	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 
 	// Kotlin
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
