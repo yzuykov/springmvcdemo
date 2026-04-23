@@ -2,14 +2,14 @@ package ru.yzuykov.springmvcdemo.service.impl
 
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
-import ru.yzuykov.springmvcdemo.client.NewsClient
+import ru.yzuykov.springmvcdemo.client.NewsHttpClient
 import ru.yzuykov.springmvcdemo.config.NewsProperties
 import ru.yzuykov.springmvcdemo.model.ArticleDto
 import ru.yzuykov.springmvcdemo.service.api.NewsService
 
 @Service
 class NewsServiceImpl(
-    private val newsClient: NewsClient,
+    private val newsHttpClient: NewsHttpClient,
     private val newsProperties: NewsProperties
 ) : NewsService {
 
@@ -17,10 +17,10 @@ class NewsServiceImpl(
 
     override fun getArticlesList(): List<ArticleDto> {
         return try {
-            val sourcesResponse = newsClient.getSources(newsProperties.apiKey, "ru")
+            val sourcesResponse = newsHttpClient.getSources("ru", newsProperties.apiKey)
             val sources = sourcesResponse.sources.joinToString(",") { it.id }
             log.info("Fetched {} sources: {}", sourcesResponse.sources.size, sources)
-            val response = newsClient.getTopHeadLines(newsProperties.apiKey, sources)
+            val response = newsHttpClient.getTopHeadLines(sources, newsProperties.apiKey)
             log.info("Got {} articles", response.articles.size)
             response.articles
         } catch (e: Exception) {
