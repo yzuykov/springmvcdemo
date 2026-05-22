@@ -4,14 +4,16 @@
 
 ## Описание
 
-Приложение для отображения новостных заголовков через внешний API ([NewsAPI](https://newsapi.org/)). Пользователь может перейти на страницу новостей, где приложение через Feign-клиент загружает актуальные статьи из указанных источников.
+Приложение для отображения новостных заголовков через внешний API ([NewsAPI](https://newsapi.org/)). На странице новостей через декларативный HTTP-клиент (`@HttpExchange`) загружаются доступные источники и актуальные статьи.
 
 ### Возможности
 
-- Отображение приветственной страницы
-- Загрузка и отображение списка новостей через NewsAPI
-- Интеграция с внешним REST API через Spring Cloud OpenFeign
-- Шаблонизация через Thymeleaf с Bootstrap-стилизацией
+- Приветственная страница
+- Загрузка и отображение новостей через NewsAPI
+- Динамическая загрузка списка источников (по языку)
+- Интеграция с внешним REST API через `@HttpExchange` (Spring Framework 7)
+- Шаблонизация через Thymeleaf с кастомными CSS-стилями
+- Дизайн-токены, CSS Grid, адаптивная вёрстка
 - Автоматическая перезагрузка при разработке (Spring Boot DevTools)
 
 ## Стек технологий
@@ -20,27 +22,23 @@
 |------------|--------|
 | Java | 21 |
 | Kotlin | 2.1.10 |
-| Spring Boot | 3.5.5 |
-| Spring Cloud | 2025.0.0 |
+| Spring Boot | 4.0.1 |
+| Spring Framework | 7.0.2 |
 | Gradle | 8.12 |
 | Thymeleaf | — |
-| Bootstrap | 5.1.3 |
-| Spring Cloud OpenFeign | — |
 | Jackson (Kotlin) | — |
-| Webjars | — |
 
 ### Тестирование
 
 | Библиотека | Версия |
 |------------|--------|
 | JUnit 5 | — |
-| Spring Boot Test | — |
 | MockK | 1.13.13 |
 
 ## Запуск
 
 ```bash
-./gradlew bootRun
+NEWS_API_KEY=your-api-key ./gradlew bootRun
 ```
 
 После запуска приложение доступно по адресу: [http://localhost:8080](http://localhost:8080)
@@ -49,13 +47,13 @@
 
 ```
 src/main/kotlin/ru/yzuykov/springmvcdemo/
-├── controller/        # Контроллеры (NewsController)
-├── service/           # Сервисный слой
-│   ├── api/           # Интерфейсы сервисов
-│   └── impl/          # Реализации сервисов
-├── client/            # Feign-клиенты для внешних API
-├── config/            # Конфигурация приложения
-└── model/             # DTO и модели данных
+├── controller/        # NewsController: `/`, `/news`
+├── service/
+│   ├── api/           # NewsService interface
+│   └── impl/          # NewsServiceImpl
+├── client/            # NewsHttpClient (@HttpExchange)
+├── config/            # NewsProperties
+└── model/             # DTO
 ```
 
 ## Конфигурация
@@ -64,10 +62,10 @@ src/main/kotlin/ru/yzuykov/springmvcdemo/
 
 ```yaml
 news:
-  url: "https://newsapi.org/v2"
-  apiKey: "your-api-key"
-  sources: "google-news-ru"
+  apiKey: ${NEWS_API_KEY:demo}
 ```
+
+Ключ передаётся через переменную окружения `NEWS_API_KEY`.
 
 ## Тесты
 
