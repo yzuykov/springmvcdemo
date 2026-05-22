@@ -80,6 +80,14 @@ a:hover {
   padding: var(--spacing-sm) var(--spacing-md);
 }
 
+.nav-toggle {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
 .nav-toggle:checked ~ .nav-links {
   display: flex;
 }
@@ -99,6 +107,12 @@ a:hover {
 .nav-link.active {
   color: #fff;
   font-weight: 600;
+}
+
+.nav-link:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
 /* Navbar toggler (hamburger) */
