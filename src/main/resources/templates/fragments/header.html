@@ -4,24 +4,16 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </th:block>
 <th:block th:fragment="navigate">
-    <!-- this is header -->
-    <nav class="navbar sticky-top navbar-dark navbar-expand-lg mb-4" style="background: linear-gradient(90deg, #0d6efd, #20c997);">
-        <a class="navbar-brand" th:href="@{/}">Spring Boot</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" th:href="@{/}">Home</a>
-                </li>
-                <li class="nav-item ">
-                    <a class="nav-link" th:href="@{/news}">News</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+  <nav class="navbar">
+    <a class="navbar-brand" th:href="@{/}">Spring Boot</a>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" hidden>
+    <label for="nav-toggle" class="nav-toggler">
+      <span></span><span></span><span></span>
+    </label>
+    <ul class="nav-links">
+      <li><a class="nav-link active" th:href="@{/}">Home</a></li>
+      <li><a class="nav-link" th:href="@{/news}">News</a></li>
+    </ul>
+  </nav>
 </th:block>
 </html>
