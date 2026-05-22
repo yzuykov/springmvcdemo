@@ -1,0 +1,21 @@
+:root {
+  --color-primary: #0d6efd;
+  --color-secondary: #20c997;
+  --color-dark: #212529;
+  --color-muted: #6c757d;
+  --color-secondary-text: #6c757d;
+  --color-body-bg: #fff;
+  --color-card-bg: #fff;
+  --color-border: rgba(0, 0, 0, 0.125);
+  --navbar-gradient: linear-gradient(90deg, #0d6efd, #20c997);
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 3rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --radius: 0.375rem;
+  --container-max-width: 1140px;
+  --breakpoint-md: 768px;
+}
