@@ -68,7 +68,6 @@ a:hover {
 .nav-links {
   list-style: none;
   margin: 0;
-  padding: 0;
   display: none;
   flex-direction: column;
   gap: var(--spacing-xs);
@@ -83,9 +82,13 @@ a:hover {
 .nav-toggle {
   position: absolute;
   opacity: 0;
-  width: 0;
-  height: 0;
-  pointer-events: none;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 .nav-toggle:checked ~ .nav-links {
@@ -131,6 +134,12 @@ a:hover {
   background: #fff;
   border-radius: 2px;
   transition: transform 0.2s;
+}
+
+.nav-toggler:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+  border-radius: 4px;
 }
 
 @media (min-width: 768px) {
